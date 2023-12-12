@@ -10,6 +10,7 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   repositoryUrl: 'https://github.com/thienytran14/cdk8s-custom-construct.git',
   publishToGo: {
     moduleName: 'github.com/thienytran14/cdk8s-custom-construct',
+    githubTokenSecret: 'GO_PUBLISH_TOKEN',
   },
 
   // deps: [],                /* Runtime dependencies of this module. */

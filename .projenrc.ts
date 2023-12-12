@@ -7,9 +7,9 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   jsiiVersion: '~5.0.0',
   name: 'cdk8s-custom-construct',
   projenrcTs: true,
-  repositoryUrl: 'https://github.com/thienytran14/cdk8s-custom-construct.git',
+  repositoryUrl: 'https://github.com/thientran2020/cdk8s-construct-projen.git',
   publishToGo: {
-    moduleName: 'github.com/thienytran14/cdk8s-custom-construct',
+    moduleName: 'github.com/thientran2020/cdk8s-construct-projen',
     githubTokenSecret: 'GO_PUBLISH_TOKEN',
   },
 

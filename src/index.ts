@@ -1,4 +1,4 @@
-import { Construct } from "constructs";
+import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 
 export class Hello {
@@ -20,7 +20,7 @@ export class CustomizedConfigmap extends Construct {
     super(scope, name);
     const namespace = opts.namespace ?? 'default';
     this.namespace = namespace;
-    const data = opts.data
+    const data = opts.data;
 
     const configmapOpts: k8s.KubeConfigMapProps = {
       metadata: {
@@ -28,7 +28,7 @@ export class CustomizedConfigmap extends Construct {
         namespace: this.namespace,
       },
       data: data,
-    }
+    };
     const cfm = new k8s.KubeConfigMap(scope, 'customized-configmap', configmapOpts);
     this.name = cfm.name;
   }
@@ -39,13 +39,13 @@ export interface ResourceQuantity {
   readonly memory?: string;
 }
 
-export function ConvertQuantity(user: ResourceQuantity | undefined, defaults: { cpu: string, memory: string }): { [key: string]: k8s.Quantity } {
+export function ConvertQuantity(user: ResourceQuantity | undefined, defaults: { cpu: string; memory: string }): { [key: string]: k8s.Quantity } {
   // defaults
   if (!user) {
     return {
       cpu: k8s.Quantity.fromString(defaults.cpu),
       memory: k8s.Quantity.fromString(defaults.memory),
-    }
+    };
   }
 
   const result: { [key: string]: k8s.Quantity } = { };
@@ -60,8 +60,8 @@ export function ConvertQuantity(user: ResourceQuantity | undefined, defaults: { 
 
 export interface CustomizedDeploymentOptions {
   readonly namespace?: string;
-  readonly labels: { [key: string]: string; };
-  readonly annotations: { [key: string]: string; };
+  readonly labels: { [key: string]: string };
+  readonly annotations: { [key: string]: string };
   readonly image: string;
   readonly replicas?: number;
   readonly serviceAccountName?: string;
@@ -87,17 +87,17 @@ export class CustomizedDeployment extends Construct {
     const namespace = opts.namespace ?? 'default';
     this.namespace = namespace;
     this.name = namespace;
-    
+
     const serviceAccountName = opts.serviceAccountName;
     const replicas = opts.replicas ?? 1;
     const image = opts.image;
     const annotations = opts.annotations;
     const labels = opts.labels;
     const resources = {
-      limits: ConvertQuantity(opts.resources?.limits, {cpu: '500m', memory: '250Mi'}),
-      requests: ConvertQuantity(opts.resources?.requests, {cpu: '500m', memory: '250Mi'})
-    }
-    
+      limits: ConvertQuantity(opts.resources?.limits, { cpu: '500m', memory: '250Mi' }),
+      requests: ConvertQuantity(opts.resources?.requests, { cpu: '500m', memory: '250Mi' }),
+    };
+
     const deploymentOpts: k8s.KubeDeploymentProps = {
       metadata: {
         name: this.namespace,
@@ -109,33 +109,33 @@ export class CustomizedDeployment extends Construct {
         replicas: replicas,
         selector: { matchLabels: selector },
         template: {
-          metadata: {labels: selector},
+          metadata: { labels: selector },
           spec: {
             serviceAccountName: serviceAccountName,
             containers: [{
               name: 'test-app',
               image: image,
-              envFrom: [{configMapRef: {name: "customized-configmap", optional: true}}],
+              envFrom: [{ configMapRef: { name: 'customized-configmap', optional: true } }],
               resources: resources,
             }],
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    };
     new k8s.KubeDeployment(this, 'customized-deployment', deploymentOpts);
   }
 }
 
 export interface CustomizedOptions {
-  readonly deploymentOptions: CustomizedDeploymentOptions
-  readonly configmapOptions: CustomizedConfigmapOptions
+  readonly deploymentOptions: CustomizedDeploymentOptions;
+  readonly configmapOptions: CustomizedConfigmapOptions;
 }
 
 export class CustomizedApp extends Construct {
   constructor(scope: Construct, name: string, opts: CustomizedOptions) {
     super(scope, name);
 
-    const selector = { app: "test-app"};
+    const selector = { app: 'test-app' };
     new CustomizedDeployment(this, 'deployment', selector, opts.deploymentOptions);
     new CustomizedConfigmap(this, 'configmap', opts.configmapOptions);
   }

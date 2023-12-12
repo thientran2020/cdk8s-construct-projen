@@ -2,7 +2,8 @@ import { cdk8s } from 'projen';
 const project = new cdk8s.ConstructLibraryCdk8s({
   author: 'thientran',
   authorAddress: 'thienytran14@gmail.com',
-  cdk8sVersion: '1.4.10',
+  cdk8sVersion: '2.68.18',
+  constructsVersion: '10.0.0',
   defaultReleaseBranch: 'main',
   jsiiVersion: '~5.0.0',
   name: 'cdk8s-custom-construct',

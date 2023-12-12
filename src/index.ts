@@ -1,6 +1,12 @@
 import { Construct } from "constructs";
 import * as k8s from './imports/k8s';
 
+export class Hello {
+  public sayHello() {
+    return 'hello, world!';
+  }
+}
+
 export interface CustomizedConfigmapOptions {
   readonly namespace?: string;
   readonly data: { [key: string]: string };

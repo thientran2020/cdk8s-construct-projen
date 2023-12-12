@@ -8,6 +8,9 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   name: 'cdk8s-custom-construct',
   projenrcTs: true,
   repositoryUrl: 'https://github.com/thienytran14/cdk8s-custom-construct.git',
+  publishToGo: {
+    moduleName: 'github.com/thienytran14/cdk8s-custom-construct',
+  },
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */

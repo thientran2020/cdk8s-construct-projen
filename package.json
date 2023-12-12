@@ -16,6 +16,7 @@
     "eslint": "npx projen eslint",
     "package": "npx projen package",
     "package-all": "npx projen package-all",
+    "package:go": "npx projen package:go",
     "package:js": "npx projen package:js",
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
@@ -110,7 +111,11 @@
   "stability": "stable",
   "jsii": {
     "outdir": "dist",
-    "targets": {},
+    "targets": {
+      "go": {
+        "moduleName": "github.com/thienytran14/cdk8s-custom-construct"
+      }
+    },
     "tsc": {
       "outDir": "lib",
       "rootDir": "src"

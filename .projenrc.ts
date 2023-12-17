@@ -13,6 +13,9 @@ const project = new cdk8s.ConstructLibraryCdk8s({
     moduleName: 'github.com/thientran2020/cdk8s-construct-projen',
     githubTokenSecret: 'GO_PUBLISH_TOKEN',
   },
+  githubOptions: {
+    workflows: false,
+  }
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
